@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "325321020460",
+    "firebase_url": "https://rpac-sports-events.firebaseio.com",
+    "project_id": "rpac-sports-events",
+    "storage_bucket": "rpac-sports-events.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:325321020460:android:a107485618c8a234be6d89",
+        "android_client_info": {
+          "package_name": "com.example.rpac_sports_events"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "325321020460-3g2rs923ti2oqab5splinj5g3scfgp6b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.rpac_sports_events",
+            "certificate_hash": "3c29de255bf1fd5515beadec20b46850e656bc4c"
+          }
+        },
+        {
+          "client_id": "325321020460-iribj2upiqmr88adqke65ofb0ev4hjbf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARuZtru-g4c-w3VePcv5Gp9OqWP8cn-vo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "325321020460-iribj2upiqmr88adqke65ofb0ev4hjbf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

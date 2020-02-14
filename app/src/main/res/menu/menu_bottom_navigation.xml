@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="@string/events"
+        android:id="@+id/home"
+        android:icon="@drawable/ic_home_gray"/>
+    <item android:title="@string/tweets"
+        android:id="@+id/feed"
+        android:icon="@drawable/ic_chat_bubble_gray"/>
+    <item android:title="@string/favorites"
+        android:id="@+id/favorite"
+        android:icon="@drawable/ic_star_gray"/>
+    <item android:title="@string/user"
+        android:id="@+id/login"
+        android:icon="@drawable/ic_person_grey"/>
+</menu>

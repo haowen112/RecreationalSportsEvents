@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Rpac-sports-events</string>
+    <string name="events">Event</string>
+    <string name="tweets">Tweet</string>
+    <string name="favorites">Favorite</string>
+    <string name="user">About You</string>
+</resources>

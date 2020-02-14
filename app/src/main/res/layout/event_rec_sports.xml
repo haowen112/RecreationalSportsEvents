@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="5dp"
+    android:id="@+id/cardView">
+
+    <LinearLayout
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/eventTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="1dp"
+        android:hint="Name not available"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/eventTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eventTitle"
+        android:layout_alignLeft="@+id/eventTitle"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="14dp"
+        android:hint="11:00am - 01:00pm"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/eventLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eventTime"
+        android:layout_alignLeft="@+id/eventTitle"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="13dp"
+        android:hint="Rpac 120b"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/eventDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eventLocation"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="10sp"
+        android:ellipsize="end"
+        android:hint="Description not available"
+        android:textSize="20sp"
+        android:maxLines="1"/>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

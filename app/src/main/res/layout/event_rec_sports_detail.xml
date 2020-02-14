@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/detailedEventTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:hint="Name not available"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/detailedEventDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eventTitle"
+        android:layout_alignLeft="@+id/eventTitle"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="30dp"
+        android:hint="Tuesday"
+        android:textSize="20sp"
+        android:drawableLeft="@drawable/ic_calendar"
+        android:drawablePadding="20dp"/>
+
+    <TextView
+        android:id="@+id/detailedEventTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eventTitle"
+        android:layout_alignLeft="@+id/eventTitle"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="30dp"
+        android:hint="11:00am - 01:00pm"
+        android:textSize="20sp"
+        android:drawableLeft="@drawable/ic_clock"
+        android:drawablePadding="20dp"/>
+
+    <TextView
+        android:id="@+id/detailedEventLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eventTime"
+        android:layout_alignLeft="@+id/eventTitle"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="30dp"
+        android:hint="Rpac 120b"
+        android:textSize="20sp"
+        android:drawableLeft="@drawable/ic_place"
+        android:drawablePadding="20dp"/>
+
+    <TextView
+        android:id="@+id/detailedEventDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eventLocation"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30sp"
+        android:ellipsize="end"
+        android:hint="Description not available"
+        android:textSize="20sp"
+        android:drawableLeft="@drawable/ic_description"
+        android:drawablePadding="20dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/calendar_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add to calendar"
+        android:layout_marginTop="0dp"
+        style="@style/Widget.MaterialComponents.Button"
+        android:backgroundTint="@color/scarlet"
+        android:layout_marginBottom="30sp"
+        android:paddingLeft="20dp"/>
+
+
+
+</LinearLayout>
+</ScrollView>

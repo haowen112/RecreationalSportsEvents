@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.rpac_sports_events.AppBarText;
 import com.example.rpac_sports_events.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,7 +25,7 @@ import androidx.navigation.Navigation;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class Login extends Fragment {
+public class Login extends Fragment implements AppBarText {
 
     private FirebaseAuth mAuth;
     private FirebaseUser user;
@@ -65,6 +67,8 @@ public class Login extends Fragment {
         login_email = login_page.findViewById(R.id.login_email);
         login_password = login_page.findViewById(R.id.login_password);
 
+        TextView tv = getActivity().findViewById(R.id.appbar_text);
+        setBarText(tv);
         login.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -101,7 +105,11 @@ public class Login extends Fragment {
         register.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.register, null));
         forget_password.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.forget_password, null));
         return login_page;
-
-
     }
+
+    @Override
+    public void setBarText(TextView tv){
+        tv.setText("Login");
+    }
+
 }

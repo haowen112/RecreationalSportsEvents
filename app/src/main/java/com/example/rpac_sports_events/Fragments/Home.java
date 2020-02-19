@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import com.example.rpac_sports_events.AppBarText;
 import com.example.rpac_sports_events.Models.EventViewModel;
 import com.example.rpac_sports_events.MyItemClickListener;
 import com.example.rpac_sports_events.R;
@@ -28,7 +30,7 @@ import com.example.rpac_sports_events.R;
 * Created by Haowen Liu on 02/01/2020
 *
 * */
-public class Home extends Fragment {
+public class Home extends Fragment implements AppBarText {
     private RecyclerView sportEvents;
     private RecSportEventsAdapter eventAdapter;
     private ProgressBar pb;
@@ -45,6 +47,8 @@ public class Home extends Fragment {
         sportEvents = (RecyclerView)home.findViewById(R.id.sportEvents);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
 
+        TextView tv = getActivity().findViewById(R.id.appbar_text);
+        setBarText(tv);
         sportEvents.setLayoutManager(layoutManager);
         em = new ViewModelProvider(requireActivity()).get(EventViewModel.class);
         em.getEvents().observe(getActivity(), new Observer<ArrayList<RecSportEvents>>() {
@@ -78,6 +82,10 @@ public class Home extends Fragment {
 
     }
 
+    @Override
+    public void setBarText(TextView tv){
+        tv.setText("Events");
+    }
 
 
 

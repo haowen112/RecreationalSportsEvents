@@ -53,11 +53,11 @@ public class RecSportEventsAdapter extends RecyclerView.Adapter<RecSportEventsAd
             LocalDate localDate = LocalDate.now();
             LocalDate url = LocalDate.parse(data.getUrlDate(), dtf);
             if(DAYS.between(localDate, url) == 0){
-                card.setCardBackgroundColor(Color.parseColor("#ebebff"));
+                card.setCardBackgroundColor(Color.parseColor("#F7F7F7"));
             }else if(DAYS.between(localDate, url) == 1){
-                card.setCardBackgroundColor(Color.parseColor("#c4c4ff"));
+                card.setCardBackgroundColor(Color.parseColor("#F0F0F0"));
             }else{
-                card.setCardBackgroundColor(Color.parseColor("#9d9dff"));
+                card.setCardBackgroundColor(Color.parseColor("#E0E0E0"));
             }
 
             eventTitle.setText(data.getTitle());

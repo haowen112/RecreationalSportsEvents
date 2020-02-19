@@ -13,11 +13,12 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.rpac_sports_events.AppBarText;
 import com.example.rpac_sports_events.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class Dashboard extends Fragment {
+public class Dashboard extends Fragment implements AppBarText {
 
     private FirebaseUser user;
     private TextView dashboard_email;
@@ -52,6 +53,8 @@ public class Dashboard extends Fragment {
         Button edit_password = (Button) dashboard_page.findViewById(R.id.dashboard_edit_password_button);
         Button sign_out = (Button) dashboard_page.findViewById(R.id.dashboard_sign_out_button);
 
+        TextView tv = getActivity().findViewById(R.id.appbar_text);
+        setBarText(tv);
 
         edit_profile.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.edit_profile, null));
         edit_password.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.change_password, null));
@@ -93,6 +96,9 @@ public class Dashboard extends Fragment {
     }
 
 
-
+    @Override
+    public void setBarText(TextView tv){
+        tv.setText("For you");
+    }
 
 }

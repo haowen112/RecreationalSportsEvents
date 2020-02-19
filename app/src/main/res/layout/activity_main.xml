@@ -9,22 +9,29 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:id="@+id/appBar"
-        android:background="@color/scarlet">
+        android:theme="@style/Theme.Design.NoActionBar">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="top"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            android:background="@color/scarlet">
 
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="90dp"
                 app:layout_collapseMode="pin"
                 android:background="@color/scarlet"
                 android:id="@+id/toolbar">
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/appbar_text"
+                android:hint="This is a hint"
+                android:textSize="50dp"
+                android:textColor="@color/white"/>
             </androidx.appcompat.widget.Toolbar>
 
 

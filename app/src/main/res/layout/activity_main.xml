@@ -5,26 +5,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="512dp"
+            android:paddingBottom="512dp" />
+
+    </androidx.core.widget.NestedScrollView>
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
         android:id="@+id/appBar"
-        android:theme="@style/Theme.Design.NoActionBar">
+        android:backgroundTint="@color/colorPrimary"
+        app:liftOnScroll="true"
+        >
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="top"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            android:background="@color/scarlet">
+            android:background="@color/scarlet"
+            >
 
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
+                android:layout_height="70dp"
                 app:layout_collapseMode="pin"
                 android:background="@color/scarlet"
-                android:id="@+id/toolbar">
+                android:id="@+id/toolbar"
+                >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -45,18 +64,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottom_navigation_view"
+
         android:layout_marginBottom="-4dp"
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph"
-        android:layout_below="@id/appBar"
-        />
-
+        android:layout_below="@id/appBar" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
         app:menu="@menu/menu_bottom_navigation"
         android:background="@color/white"
         app:elevation="20dp"

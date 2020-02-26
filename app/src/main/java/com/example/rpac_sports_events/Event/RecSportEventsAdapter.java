@@ -1,23 +1,20 @@
-package com.example.rpac_sports_events.Fragments;
+package com.example.rpac_sports_events.Event;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import com.example.rpac_sports_events.MyItemClickListener;
+import com.example.rpac_sports_events.Interface.MyItemClickListener;
 import com.example.rpac_sports_events.R;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -54,14 +51,14 @@ public class RecSportEventsAdapter extends RecyclerView.Adapter<RecSportEventsAd
             LocalDate url = LocalDate.parse(data.getUrlDate(), dtf);
             if(DAYS.between(localDate, url) == 0){
                 card.setCardBackgroundColor(Color.parseColor("#F7F7F7"));
+                eventTime.setText("Today "+data.getTime());
             }else if(DAYS.between(localDate, url) == 1){
                 card.setCardBackgroundColor(Color.parseColor("#F0F0F0"));
-            }else{
-                card.setCardBackgroundColor(Color.parseColor("#E0E0E0"));
+                eventTime.setText("Tomorrow "+data.getTime());
             }
 
             eventTitle.setText(data.getTitle());
-            eventTime.setText(data.getTime());
+
             eventLocation.setText(data.getLocation());
             eventDescription.setText(data.getDescription());
             itemView.setOnClickListener(new View.OnClickListener() {

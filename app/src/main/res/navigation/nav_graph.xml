@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/home"
-        android:name="com.example.rpac_sports_events.Fragments.Home"
+        android:name="com.example.rpac_sports_events.Fragment.Home"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/event_detail"
-        android:name="com.example.rpac_sports_events.Fragments.DetailedEvents"
+        android:name="com.example.rpac_sports_events.Fragment.DetailedEvents"
         android:label="event_rec_sports_detail"
         tools:layout="@layout/event_rec_sports_detail">
         <argument
@@ -30,13 +30,13 @@
     </fragment>
     <fragment
         android:id="@+id/feed"
-        android:name="com.example.rpac_sports_events.Fragments.Feed"
+        android:name="com.example.rpac_sports_events.Fragment.Feed"
         android:label="twitter_feed"
         tools:layout="@layout/fragment_feed" />
 
     <fragment
         android:id="@+id/favorite"
-        android:name="com.example.rpac_sports_events.Fragments.Favorite"
+        android:name="com.example.rpac_sports_events.Fragment.Favorite"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" >
         <action
@@ -46,7 +46,7 @@
 
     <fragment
         android:id="@+id/login"
-        android:name="com.example.rpac_sports_events.Fragments.Login"
+        android:name="com.example.rpac_sports_events.Fragment.Login"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -74,7 +74,7 @@
 
     <fragment
         android:id="@+id/register"
-        android:name="com.example.rpac_sports_events.Fragments.Register"
+        android:name="com.example.rpac_sports_events.Fragment.Register"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
@@ -86,7 +86,7 @@
 
     <fragment
         android:id="@+id/forget_password"
-        android:name="com.example.rpac_sports_events.Fragments.ForgetPassword"
+        android:name="com.example.rpac_sports_events.Fragment.ForgetPassword"
         android:label="fragment_forget_password"
         tools:layout="@layout/fragment_forget_password" >
         <action
@@ -96,7 +96,7 @@
 
     <fragment
         android:id="@+id/dashboard"
-        android:name="com.example.rpac_sports_events.Fragments.Dashboard"
+        android:name="com.example.rpac_sports_events.Fragment.Dashboard"
         android:label="fragment_dashboard"
         tools:layout="@layout/fragment_dashboard">
         <action
@@ -121,7 +121,7 @@
 
     <fragment
         android:id="@+id/change_password"
-        android:name="com.example.rpac_sports_events.Fragments.ChangePassword"
+        android:name="com.example.rpac_sports_events.Fragment.ChangePassword"
         android:label="fragment_change_password"
         tools:layout="@layout/fragment_change_password">
         <action
@@ -134,7 +134,7 @@
 
     <fragment
         android:id="@+id/edit_profile"
-        android:name="com.example.rpac_sports_events.Fragments.EditProfile"
+        android:name="com.example.rpac_sports_events.Fragment.EditProfile"
         android:label="fragment_edit_profile"
         tools:layout="@layout/fragment_edit_profile">
         <action

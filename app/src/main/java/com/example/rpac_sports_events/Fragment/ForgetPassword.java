@@ -1,4 +1,4 @@
-package com.example.rpac_sports_events.Fragments;
+package com.example.rpac_sports_events.Fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

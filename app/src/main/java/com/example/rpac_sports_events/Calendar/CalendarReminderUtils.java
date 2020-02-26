@@ -1,4 +1,4 @@
-package com.example.rpac_sports_events;
+package com.example.rpac_sports_events.Calendar;
 
 import android.content.ContentUris;
 import android.content.ContentValues;

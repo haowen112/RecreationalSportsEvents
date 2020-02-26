@@ -1,4 +1,4 @@
-package com.example.rpac_sports_events.Fragments;
+package com.example.rpac_sports_events.Fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.example.rpac_sports_events.AppBarText;
+import com.example.rpac_sports_events.Interface.AppBarText;
 import com.example.rpac_sports_events.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -98,7 +98,7 @@ public class Dashboard extends Fragment implements AppBarText {
 
     @Override
     public void setBarText(TextView tv){
-        tv.setText("For you");
+        tv.setText("Dashboard");
     }
 
 }

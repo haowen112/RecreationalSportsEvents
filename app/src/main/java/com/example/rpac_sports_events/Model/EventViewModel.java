@@ -1,4 +1,4 @@
-package com.example.rpac_sports_events.Models;
+package com.example.rpac_sports_events.Model;
 
 import android.app.Application;
 import android.os.AsyncTask;
@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import com.example.rpac_sports_events.Fragments.RecSportEvents;
+import com.example.rpac_sports_events.Event.RecSportEvents;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -46,12 +46,10 @@ public class EventViewModel extends AndroidViewModel {
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/M/d");
                 LocalDate localDate = LocalDate.now();
                 LocalDate tomorrow = localDate.plusDays(1);
-                LocalDate dayAfterTomorrow = localDate.plusDays(2);
 
                 // Scrape three days loads of events because of slow website responding time
                 String url1 = String.format("https://recsports.osu.edu/events.aspx/%s?d=2", dtf.format(localDate));
                 String url2 = String.format("https://recsports.osu.edu/events.aspx/%s?d=2", dtf.format(tomorrow));
-                String url3 = String.format("https://recsports.osu.edu/events.aspx/%s?d=2", dtf.format(dayAfterTomorrow));
 
                 Document eventUrls;
                 Elements urls;
@@ -60,8 +58,6 @@ public class EventViewModel extends AndroidViewModel {
                 ArrayList<RecSportEvents> events1 = null;
                 ArrayList<Document> eventList2;
                 ArrayList<RecSportEvents> events2 = null;
-                ArrayList<Document> eventList3;
-                ArrayList<RecSportEvents> events3 = null;
 
 
                 try {
@@ -94,26 +90,12 @@ public class EventViewModel extends AndroidViewModel {
                     e.printStackTrace();
                 }
 
-                try {
-                    eventUrls = Jsoup.connect(url3).get();
-                    urls = eventUrls.select("li.confirmed a");
-                    eventList3 = new ArrayList<Document>();
-                    for (Element e : urls) {
-                        String event_url = e.attr("href");
-                        String detailed_url = String.format("https://recsports.osu.edu%s", event_url);
-                        eventList3.add(Jsoup.connect(detailed_url).get());
-                    }
-                    events3 = RecSportEvents.fromDocument(eventList3);
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
 
 
                 ArrayList<RecSportEvents> finalEvents = new ArrayList<>();
                 finalEvents.addAll(events1);
                 finalEvents.addAll(events2);
-                finalEvents.addAll(events3);
 
                 return finalEvents;
             }

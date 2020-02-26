@@ -1,7 +1,6 @@
-package com.example.rpac_sports_events.Fragments;
+package com.example.rpac_sports_events.Event;
 
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.Serializable;

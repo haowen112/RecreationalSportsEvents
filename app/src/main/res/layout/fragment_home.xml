@@ -18,6 +18,5 @@
         android:layout_height="wrap_content"
         android:scrollbarSize="4dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp">
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_marginRight="8dp"/>
 </LinearLayout>

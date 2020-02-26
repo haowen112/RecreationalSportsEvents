@@ -1,4 +1,4 @@
-package com.example.rpac_sports_events;
+package com.example.rpac_sports_events.Calendar;
 
 import android.app.AlertDialog;
 import android.content.Context;

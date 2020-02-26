@@ -1,4 +1,4 @@
-package com.example.rpac_sports_events.Fragments;
+package com.example.rpac_sports_events.Fragment;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -13,11 +13,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
-import com.example.rpac_sports_events.CalendarPermissionUtil;
-import com.example.rpac_sports_events.CalendarReminderUtils;
+import com.example.rpac_sports_events.Calendar.CalendarPermissionUtil;
+import com.example.rpac_sports_events.Calendar.CalendarReminderUtils;
 import com.example.rpac_sports_events.R;
 
 import java.util.Calendar;

@@ -2,6 +2,8 @@ package com.example.rpac_sports_events.Twitter;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.lang.reflect.Array;
+
 public class Tweet {
     @SerializedName("created_at")
     private String time;
@@ -15,7 +17,9 @@ public class Tweet {
     }
 
     public String getTime(){
-        return time;
+        String[] timegroup = time.split(" ");
+
+        return timegroup[0]+" "+timegroup[1]+" "+timegroup[2]+" "+timegroup[3];
     }
 
     public String getText(){

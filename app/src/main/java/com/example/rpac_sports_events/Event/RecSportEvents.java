@@ -5,6 +5,8 @@ import org.jsoup.select.Elements;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RecSportEvents implements Serializable {
     private String title;
@@ -13,6 +15,7 @@ public class RecSportEvents implements Serializable {
     private String description;
     private String date;
     private String urlDate;
+    private String pattern = "2.*\\?";
 
     public String getTitle(){
         return title;
@@ -51,7 +54,17 @@ public class RecSportEvents implements Serializable {
             event.description = doc.select("div#calendar div#dates div.mainbar>p:eq(3)").text();
 
             Elements e = doc.select("a.button-today");
-            event.urlDate = e.attr("href").substring(13,22);
+            Pattern r = Pattern.compile(event.pattern);
+
+            // Now create matcher object.
+            Matcher m = r.matcher(e.attr("href"));
+
+            if(m.find()) {
+                String date = m.group(0);
+                event.urlDate = date.substring(0, date.length() - 1);;
+            }else{
+                event.urlDate = "";
+            }
 
         } catch (Error e){
             e.printStackTrace();

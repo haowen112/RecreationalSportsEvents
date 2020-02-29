@@ -17,6 +17,13 @@ import androidx.fragment.app.Fragment;
 import com.example.rpac_sports_events.Calendar.CalendarPermissionUtil;
 import com.example.rpac_sports_events.Calendar.CalendarReminderUtils;
 import com.example.rpac_sports_events.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
@@ -35,12 +42,24 @@ public class DetailedEvents extends Fragment {
     private TextView eventDescription;
     private Button add_to_calendar;
     private String[] event;
+    private Button add_to_favorite;
+    private FirebaseUser user;
+    private String uid;
+    private DatabaseReference myRef;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        myRef = FirebaseDatabase.getInstance().getReference();
+
+    }
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         View detailedEvent = inflater.inflate(R.layout.event_rec_sports_detail, container, false);
 
+        event = getArguments().getString("event").split(">");
 
         eventTitle = (TextView)detailedEvent.findViewById(R.id.detailedEventTitle);
         eventDate = (TextView)detailedEvent.findViewById(R.id.detailedEventDate);
@@ -49,6 +68,8 @@ public class DetailedEvents extends Fragment {
         eventDescription = (TextView)detailedEvent.findViewById(R.id.detailedEventDescription);
 
         add_to_calendar = detailedEvent.findViewById(R.id.calendar_button);
+        add_to_favorite = detailedEvent.findViewById(R.id.favorite_button);
+
         add_to_calendar.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -57,7 +78,43 @@ public class DetailedEvents extends Fragment {
                     }
                 }
         );
-        event = getArguments().getString("event").split(">");
+        add_to_favorite.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(user !=null){
+                            uid = user.getUid();
+                            myRef.child("user").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    boolean added = false;
+                                    for(DataSnapshot data: dataSnapshot.getChildren()){
+                                        if(data.getValue().equals(event[0])){
+                                            Toast.makeText(getActivity(), "Event already added",
+                                                    Toast.LENGTH_SHORT).show();
+                                            added = true;
+                                        }
+                                    }
+                                    if(!added){
+                                        myRef.child("user").child(uid).push().setValue(event[0]);
+                                        Toast.makeText(getActivity(), "Event added to favorite",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    Toast.makeText(getActivity(), "Database connection error",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                        }else{
+                            Toast.makeText(getActivity(), "Please login first",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        );
 
         loadEvent(event);
         return detailedEvent;
@@ -142,7 +199,7 @@ public class DetailedEvents extends Fragment {
                     @Override
                     public void accept(Boolean saveResult) throws Exception {
                         if (saveResult) {
-                            Toast.makeText(getActivity().getApplicationContext(), "Add to calendar successful", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity().getApplicationContext(), "Add to calendar successful", Toast.LENGTH_SHORT).show();
                         } else {
                             CalendarPermissionUtil.showWaringDialog(getActivity());
                         }
@@ -192,4 +249,6 @@ public class DetailedEvents extends Fragment {
             }
         }
     }
+
+
 }

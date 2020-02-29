@@ -86,8 +86,6 @@ public class Feed extends Fragment implements AppBarText {
                     LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
                     tweetsView.setLayoutManager(layoutManager);
                     tweetsView.setAdapter(tweetAdapter);
-                    Toast.makeText(getActivity(), "get timeline successful",
-                            Toast.LENGTH_SHORT).show();
 
                 }else{
                     Log.d("Test", response.code()+" ");

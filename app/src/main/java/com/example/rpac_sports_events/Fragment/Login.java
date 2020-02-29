@@ -86,7 +86,7 @@ public class Login extends Fragment implements AppBarText {
                         if (isNetworkAvailable()) {
                             if (login_email.length() <= 0 || login_password.length() <= 0) {
                                 Toast.makeText(getActivity(), "Please enter your credentials",
-                                        Toast.LENGTH_LONG).show();
+                                        Toast.LENGTH_SHORT).show();
                             } else {
                                 String email = login_email.getText().toString().trim();
                                 String pass = login_password.getText().toString().trim();
@@ -98,21 +98,21 @@ public class Login extends Fragment implements AppBarText {
                                                     // Sign in success, update UI with the signed-in user's information
                                                     Log.d(TAG, "signInWithEmail:success");
                                                     Toast.makeText(getActivity(), "Welcome Back!",
-                                                            Toast.LENGTH_LONG).show();
+                                                            Toast.LENGTH_SHORT).show();
                                                     NavController navController = Navigation.findNavController(getActivity(), R.id.navigation_host_fragment);
                                                     navController.navigate(R.id.action_login_to_dashboard);
                                                 } else {
                                                     // If sign in fails, display a message to the user.
                                                     Log.w(TAG, "signInWithEmail:failure", task.getException());
                                                     Toast.makeText(getActivity(), "Email or password wrong",
-                                                            Toast.LENGTH_LONG).show();
+                                                            Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                         });
                             }
                         }else{
                             Toast.makeText(getActivity(), "No network connection",
-                                    Toast.LENGTH_LONG).show();
+                                    Toast.LENGTH_SHORT).show();
                         }
                     }
         });

@@ -74,7 +74,7 @@ public class EditProfile extends Fragment {
                                                 Log.d(TAG, "User profile updated.");
                                                 Toast.makeText(getActivity(), "Username updated. You may need to sign-in again to " +
                                                                 "see the change",
-                                                        Toast.LENGTH_LONG).show();
+                                                        Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     });
@@ -83,7 +83,7 @@ public class EditProfile extends Fragment {
 
                         }else{
                             Toast.makeText(getActivity(), "Invalid username",
-                                    Toast.LENGTH_LONG).show();
+                                    Toast.LENGTH_SHORT).show();
                         }
                     }
         });

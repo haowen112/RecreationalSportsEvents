@@ -12,7 +12,7 @@ import retrofit2.http.POST;
 public interface GetTweet {
 
     //get twitter timeline
-    @GET("1.1/statuses/user_timeline.json?screen_name=osurec&count=3")
+    @GET("1.1/statuses/user_timeline.json?screen_name=osurec&count=20")
     Call<List<Tweet>> getTimeLine();
 
     //get auth token

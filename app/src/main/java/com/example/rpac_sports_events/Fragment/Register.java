@@ -72,7 +72,7 @@ public class Register extends Fragment {
                         if(isNetworkAvailable()) {
                             if (register_email.length() <= 0 || register_password.length() <= 0 || register_password2.length() <= 0) {
                                 Toast.makeText(getActivity(), "Please enter your credentials",
-                                        Toast.LENGTH_LONG).show();
+                                        Toast.LENGTH_SHORT).show();
                             } else {
                                 String email = register_email.getText().toString().trim();
                                 String pass = register_password.getText().toString();
@@ -85,26 +85,26 @@ public class Register extends Fragment {
                                                     @Override
                                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                                         if (task.isSuccessful()) {
-                                                            Toast.makeText(getActivity(), "Register Successfully", Toast.LENGTH_LONG).show();
+                                                            Toast.makeText(getActivity(), "Register Successfully", Toast.LENGTH_SHORT).show();
                                                             Log.d(TAG, "createUserWithEmail:success");
                                                             NavController navController = Navigation.findNavController(getActivity(), R.id.navigation_host_fragment);
                                                             navController.navigate(R.id.action_register_to_login2);
                                                         } else {
                                                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                                            Toast.makeText(getActivity(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                                            Toast.makeText(getActivity(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }
                                                 }
                                         );
                                     } else {
-                                        Toast.makeText(getActivity(), "Passwords don't match", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getActivity(), "Passwords don't match", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
-                                    Toast.makeText(getActivity(), "Email entered is wrong", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity(), "Email entered is wrong", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }else{
-                            Toast.makeText(getActivity(), "No network connection", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "No network connection", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

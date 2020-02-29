@@ -63,7 +63,7 @@ public class Home extends Fragment implements AppBarText {
         }else{
             pb.setVisibility(View.GONE);
             Toast.makeText(getActivity(), "No network connection",
-                    Toast.LENGTH_LONG).show();
+                    Toast.LENGTH_SHORT).show();
         }
 
 

@@ -72,7 +72,7 @@ public class ChangePassword extends Fragment {
                                                 if (task.isSuccessful()) {
                                                     Log.d(TAG, "User password updated.");
                                                     Toast.makeText(getActivity(), "Password updated! Please sign-in",
-                                                            Toast.LENGTH_LONG).show();
+                                                            Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                         });
@@ -81,11 +81,11 @@ public class ChangePassword extends Fragment {
                                 navController.navigate(R.id.action_change_password_to_login);
                             }else{
                                 Toast.makeText(getActivity(), "Passwords don't match",
-                                        Toast.LENGTH_LONG).show();
+                                        Toast.LENGTH_SHORT).show();
                             }
                         }else{
                             Toast.makeText(getActivity(), "Please choose another password",
-                                    Toast.LENGTH_LONG).show();
+                                    Toast.LENGTH_SHORT).show();
                         }
 
                     }

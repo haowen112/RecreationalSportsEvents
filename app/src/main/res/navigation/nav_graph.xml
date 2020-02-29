@@ -41,7 +41,14 @@
         tools:layout="@layout/fragment_favorite" >
         <action
             android:id="@+id/action_favorite_to_event_detail"
-            app:destination="@id/event_detail" />
+            app:destination="@id/event_detail"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_favorite_to_login"
+            app:destination="@id/login"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"/>
     </fragment>
 
     <fragment

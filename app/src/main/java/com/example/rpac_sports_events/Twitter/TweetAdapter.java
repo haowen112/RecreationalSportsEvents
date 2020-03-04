@@ -11,6 +11,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.rpac_sports_events.Event.RecSportEvents;
+import com.example.rpac_sports_events.Favorite.FavoriteEvents;
+import com.example.rpac_sports_events.Interface.FavoriteItemClickListener;
+import com.example.rpac_sports_events.Interface.FeedItemClickListener;
+import com.example.rpac_sports_events.Interface.MyItemClickListener;
 import com.example.rpac_sports_events.R;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -19,9 +25,12 @@ import java.util.regex.Pattern;
 public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.MyViewHolder>{
 
     List<Tweet> tweets;
+    FeedItemClickListener listener;
+    Spanned TEXT = Html.fromHtml("<a href='https://twitter.com/OSURec' style=\"text-decoration: none\" >OhioStateRecSports</a>");
 
-    public TweetAdapter(List<Tweet> tweets){
+    public TweetAdapter(List<Tweet> tweets, FeedItemClickListener listener) {
         this.tweets = tweets;
+        this.listener = listener;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder{
@@ -37,6 +46,18 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.MyViewHolder
             tweetTime = itemView.findViewById(R.id.tweetTime);
             tweetText = itemView.findViewById(R.id.tweetText);
         }
+
+        public void bind(final Tweet data, final FeedItemClickListener listener) {
+            tweetTime.setText(data.getTime());
+            tweetText.setText(data.getText());
+            tweetName.setText(TEXT);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClick(data);
+                }
+            });
+        }
     }
 
     @NonNull
@@ -50,11 +71,12 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(MyViewHolder viewHolder, int i) {
-        Spanned text = Html.fromHtml("<a href='https://twitter.com/OSURec' style=\"text-decoration: none\" >OhioStateRecSports</a>");
-        viewHolder.tweetName.setMovementMethod(LinkMovementMethod.getInstance());
-        viewHolder.tweetName.setText(text);
-        viewHolder.tweetTime.setText(tweets.get(i).getTime());
-        viewHolder.tweetText.setText(tweets.get(i).getText());
+//        viewHolder.tweetName.setMovementMethod(LinkMovementMethod.getInstance());
+//        viewHolder.tweetName.setText(text);
+//        viewHolder.tweetTime.setText(tweets.get(i).getTime());
+//        viewHolder.tweetText.setText(tweets.get(i).getText());
+        viewHolder.bind(tweets.get(i), listener);
+
     }
 
     @Override

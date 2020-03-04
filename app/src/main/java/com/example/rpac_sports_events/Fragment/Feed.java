@@ -1,7 +1,9 @@
 package com.example.rpac_sports_events.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.GetChars;
 import android.util.Log;
@@ -13,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rpac_sports_events.Interface.AppBarText;
+import com.example.rpac_sports_events.Interface.FavoriteItemClickListener;
+import com.example.rpac_sports_events.Interface.FeedItemClickListener;
 import com.example.rpac_sports_events.Interface.GetTweet;
 import com.example.rpac_sports_events.MainActivity;
 import com.example.rpac_sports_events.R;
@@ -40,11 +44,18 @@ public class Feed extends Fragment implements AppBarText {
     private List<Tweet> timelineList;
     private RecyclerView tweetsView;
     private TweetAdapter tweetAdapter;
-
+    private GetTweet token_service;
+    private TwitterToken token;
 
     @Override
-    public void onCreate(Bundle instance){
+    public void onCreate(Bundle instance) {
         super.onCreate(instance);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
 
     }
 
@@ -58,7 +69,8 @@ public class Feed extends Fragment implements AppBarText {
         tweetsView = v.findViewById(R.id.tweets);
 
         if(isNetworkAvailable()){
-            getTimeLine();
+            token_service = TwitterApiClient.getTwitterApiToken().create(GetTweet.class);
+            getToken();
         }else{
             Toast.makeText(getActivity(), "No network connection",
                     Toast.LENGTH_SHORT).show();
@@ -73,8 +85,9 @@ public class Feed extends Fragment implements AppBarText {
 
 
     public void getTimeLine(){
+
         MainActivity activity = (MainActivity) getActivity();
-        api_call = TwitterApiClient.getClient(activity.returnToken()).create(GetTweet.class);
+        api_call = TwitterApiClient.getClient(token.getToken()).create(GetTweet.class);
         Call<List<Tweet>> call = api_call.getTimeLine();
 
         call.enqueue(new Callback<List<Tweet>>() {
@@ -82,7 +95,13 @@ public class Feed extends Fragment implements AppBarText {
             public void onResponse(Call<List<Tweet>> call, Response<List<Tweet>> response) {
                 if(response.isSuccessful()){
                     timelineList = response.body();
-                    tweetAdapter = new TweetAdapter(timelineList);
+                    tweetAdapter = new TweetAdapter(timelineList, new FeedItemClickListener() {
+                        @Override
+                        public void onItemClick(Tweet tweet) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse("http://www.twitter.com/osurec/status/" + tweet.getId()));
+                            startActivity(intent);
+                        }
+                    });
                     LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
                     tweetsView.setLayoutManager(layoutManager);
                     tweetsView.setAdapter(tweetAdapter);
@@ -110,6 +129,31 @@ public class Feed extends Fragment implements AppBarText {
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         return activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting();
+
+    }
+
+    public void getToken() {
+        Call<TwitterToken> call = token_service.getToken();
+        call.enqueue(new Callback<TwitterToken>() {
+            @Override
+            public void onResponse(Call<TwitterToken> call, Response<TwitterToken> response) {
+                if (response.isSuccessful()) {
+                    Log.d("Test", "Get token successful ");
+                    token = response.body();
+                    getTimeLine();
+
+                } else {
+                    Log.d("Test", "Get token failed ");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TwitterToken> call, Throwable t) {
+                Log.d("Test", "Get token failed");
+            }
+        });
+        Log.d(TAG, "OnCreate() - get twitter api token");
+
 
     }
 }

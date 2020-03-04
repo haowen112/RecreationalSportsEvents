@@ -1,4 +1,6 @@
 package com.example.rpac_sports_events.Fragment;
+
+import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -34,8 +36,8 @@ public class Login extends Fragment implements AppBarText {
     private TextInputEditText login_password;
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         Log.d(TAG, "Login fragment created");
 
         mAuth = FirebaseAuth.getInstance();
@@ -136,4 +138,5 @@ public class Login extends Fragment implements AppBarText {
                 activeNetwork.isConnectedOrConnecting();
 
     }
+
 }

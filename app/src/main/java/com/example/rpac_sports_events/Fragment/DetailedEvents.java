@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.rpac_sports_events.Calendar.CalendarPermissionUtil;
 import com.example.rpac_sports_events.Calendar.CalendarReminderUtils;
+import com.example.rpac_sports_events.Interface.AppBarText;
 import com.example.rpac_sports_events.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,7 +35,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class DetailedEvents extends Fragment {
+public class DetailedEvents extends Fragment implements AppBarText {
     private TextView eventTitle;
     private TextView eventDate;
     private TextView eventTime;
@@ -117,6 +118,9 @@ public class DetailedEvents extends Fragment {
         );
 
         loadEvent(event);
+
+        TextView tv = getActivity().findViewById(R.id.appbar_text);
+        setBarText(tv);
         return detailedEvent;
 
     }
@@ -249,6 +253,12 @@ public class DetailedEvents extends Fragment {
             }
         }
     }
+
+    @Override
+    public void setBarText(TextView tv) {
+        tv.setText("Events");
+    }
+
 
 
 }

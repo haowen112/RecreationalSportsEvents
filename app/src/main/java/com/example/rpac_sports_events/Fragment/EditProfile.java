@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.rpac_sports_events.Interface.AppBarText;
 import com.example.rpac_sports_events.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,7 +26,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class EditProfile extends Fragment {
+public class EditProfile extends Fragment implements AppBarText {
 
     private FirebaseUser user;
     private TextInputEditText edit_username;
@@ -53,7 +55,8 @@ public class EditProfile extends Fragment {
         user = FirebaseAuth.getInstance().getCurrentUser();
 
         Button submit = (Button) edit_profile_page.findViewById(R.id.profile_submit_button);
-
+        TextView tv = getActivity().findViewById(R.id.appbar_text);
+        setBarText(tv);
 
         edit_username = edit_profile_page.findViewById(R.id.edit_profile_username);
 
@@ -86,9 +89,14 @@ public class EditProfile extends Fragment {
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
-        });
+                });
 
         return edit_profile_page;
 
+    }
+
+    @Override
+    public void setBarText(TextView tv) {
+        tv.setText("Edit Username");
     }
 }

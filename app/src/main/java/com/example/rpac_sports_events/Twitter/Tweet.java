@@ -11,9 +11,14 @@ public class Tweet {
     @SerializedName("text")
     private String text;
 
-    public Tweet(String time, String text){
+    @SerializedName("id")
+    private String id;
+
+
+    public Tweet(String time, String text, String id) {
         this.time = time;
         this.text = text;
+        this.id = id;
     }
 
     public String getTime(){
@@ -24,5 +29,9 @@ public class Tweet {
 
     public String getText(){
         return text;
+    }
+
+    public String getId() {
+        return id;
     }
 }

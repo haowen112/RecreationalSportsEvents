@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
@@ -17,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.rpac_sports_events.Interface.AppBarText;
 import com.example.rpac_sports_events.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,7 +28,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class Register extends Fragment {
+public class Register extends Fragment implements AppBarText {
 
     private TextInputEditText register_email;
     private TextInputEditText register_password;
@@ -57,7 +59,8 @@ public class Register extends Fragment {
         View register_page = inflater.inflate(R.layout.fragment_register, container, false);
 
         Button register = (Button) register_page.findViewById(R.id.register_submit_button);
-
+        TextView tv = getActivity().findViewById(R.id.appbar_text);
+        setBarText(tv);
         register_email = register_page.findViewById(R.id.register_email);
         register_password = register_page.findViewById(R.id.register_password);
         register_password2 = register_page.findViewById(R.id.register_password2);
@@ -120,5 +123,10 @@ public class Register extends Fragment {
         return activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting();
 
+    }
+
+    @Override
+    public void setBarText(TextView tv) {
+        tv.setText("Register");
     }
 }

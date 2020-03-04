@@ -49,6 +49,11 @@
             app:destination="@id/login"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_favorite_self"
+            app:destination="@id/favorite"
+            app:popUpTo="@id/favorite"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment

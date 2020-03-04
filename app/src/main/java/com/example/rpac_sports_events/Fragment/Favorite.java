@@ -132,6 +132,8 @@ public class Favorite extends Fragment implements AppBarText {
                                         myRef.child("user").child(user.getUid()).child(data.getKey()).removeValue();
                                         Toast.makeText(getActivity(), "Event deleted",
                                                 Toast.LENGTH_SHORT).show();
+                                        NavController navController = Navigation.findNavController(getActivity(), R.id.navigation_host_fragment);
+                                        navController.navigate(R.id.action_favorite_self);
                                     }
                                 }
                             }

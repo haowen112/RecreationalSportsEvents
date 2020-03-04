@@ -11,13 +11,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.rpac_sports_events.Interface.AppBarText;
 import com.example.rpac_sports_events.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class ForgetPassword extends Fragment {
+public class ForgetPassword extends Fragment implements AppBarText {
 
     private FirebaseAuth auth;
     private TextInputEditText email;
@@ -36,7 +37,8 @@ public class ForgetPassword extends Fragment {
         View v =  inflater.inflate(R.layout.fragment_forget_password,container, false);
         email = v.findViewById(R.id.forget_password_email);
         submit = v.findViewById(R.id.forget_password_submit);
-
+        TextView tv = getActivity().findViewById(R.id.appbar_text);
+        setBarText(tv);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,5 +68,10 @@ public class ForgetPassword extends Fragment {
 
         return v;
 
+    }
+
+    @Override
+    public void setBarText(TextView tv) {
+        tv.setText("Reset Password");
     }
 }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.rpac_sports_events.Interface.AppBarText;
 import com.example.rpac_sports_events.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,7 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class ChangePassword extends Fragment {
+public class ChangePassword extends Fragment implements AppBarText {
 
     private FirebaseUser user;
     private TextInputEditText pass;
@@ -54,7 +56,8 @@ public class ChangePassword extends Fragment {
 
         pass = change_password_page.findViewById(R.id.change_password_text);
         cpass = change_password_page.findViewById(R.id.change_password2_text);
-
+        TextView tv = getActivity().findViewById(R.id.appbar_text);
+        setBarText(tv);
         user = FirebaseAuth.getInstance().getCurrentUser();
 
         submit.setOnClickListener(
@@ -92,5 +95,10 @@ public class ChangePassword extends Fragment {
                 }
         );
         return change_password_page;
+    }
+
+    @Override
+    public void setBarText(TextView tv) {
+        tv.setText("Change Password");
     }
 }

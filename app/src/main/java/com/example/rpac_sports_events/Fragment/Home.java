@@ -44,12 +44,14 @@ public class Home extends Fragment implements AppBarText {
     private ProgressBar pb;
     public static final String EVENT_DETAIL_KEY = "event";
     private EventViewModel em;
+    private TextView noEvent;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View home = inflater.inflate(R.layout.fragment_home, container, false);
+        noEvent = home.findViewById(R.id.home_text);
         Log.d(TAG, "onCreateView() - Home Fragment");
         pb = (ProgressBar)home.findViewById(R.id.progressbar);
         TextView tv = getActivity().findViewById(R.id.appbar_text);
@@ -62,6 +64,7 @@ public class Home extends Fragment implements AppBarText {
             getEvents();
         }else{
             pb.setVisibility(View.GONE);
+            noEvent.setVisibility(View.GONE);
             Toast.makeText(getActivity(), "No network connection",
                     Toast.LENGTH_SHORT).show();
         }
@@ -111,6 +114,8 @@ public class Home extends Fragment implements AppBarText {
                     });
                     Log.d(TAG, "onCreateView() - Events created");
                     sportEvents.setAdapter(eventAdapter);
+                } else {
+                    noEvent.setVisibility(View.VISIBLE);
                 }
                 eventAdapter.notifyDataSetChanged();
                 Log.d(TAG, "onCreateView() - Events adapter notified");

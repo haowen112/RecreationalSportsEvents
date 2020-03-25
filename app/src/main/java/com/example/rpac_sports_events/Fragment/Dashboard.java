@@ -49,9 +49,9 @@ public class Dashboard extends Fragment implements AppBarText {
                              Bundle savedInstanceState) {
         View dashboard_page =  inflater.inflate(R.layout.fragment_dashboard, container, false);
 
-        Button edit_profile = (Button) dashboard_page.findViewById(R.id.dashboard_edit_profile_button);
-        Button edit_password = (Button) dashboard_page.findViewById(R.id.dashboard_edit_password_button);
-        Button sign_out = (Button) dashboard_page.findViewById(R.id.dashboard_sign_out_button);
+        Button edit_profile = dashboard_page.findViewById(R.id.dashboard_edit_profile_button);
+        Button edit_password = dashboard_page.findViewById(R.id.dashboard_edit_password_button);
+        Button sign_out = dashboard_page.findViewById(R.id.dashboard_sign_out_button);
 
         TextView tv = getActivity().findViewById(R.id.appbar_text);
         setBarText(tv);

@@ -62,11 +62,11 @@ public class DetailedEvents extends Fragment implements AppBarText {
 
         event = getArguments().getString("event").split(">");
 
-        eventTitle = (TextView)detailedEvent.findViewById(R.id.detailedEventTitle);
-        eventDate = (TextView)detailedEvent.findViewById(R.id.detailedEventDate);
-        eventTime = (TextView)detailedEvent.findViewById(R.id.detailedEventTime);
-        eventLocation = (TextView)detailedEvent.findViewById(R.id.detailedEventLocation);
-        eventDescription = (TextView)detailedEvent.findViewById(R.id.detailedEventDescription);
+        eventTitle = detailedEvent.findViewById(R.id.detailedEventTitle);
+        eventDate = detailedEvent.findViewById(R.id.detailedEventDate);
+        eventTime = detailedEvent.findViewById(R.id.detailedEventTime);
+        eventLocation = detailedEvent.findViewById(R.id.detailedEventLocation);
+        eventDescription = detailedEvent.findViewById(R.id.detailedEventDescription);
 
         add_to_calendar = detailedEvent.findViewById(R.id.calendar_button);
         add_to_favorite = detailedEvent.findViewById(R.id.favorite_button);

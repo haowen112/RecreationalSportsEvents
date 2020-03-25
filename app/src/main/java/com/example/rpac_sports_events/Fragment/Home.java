@@ -55,12 +55,12 @@ public class Home extends Fragment implements AppBarText {
         View home = inflater.inflate(R.layout.fragment_home, container, false);
         noEvent = home.findViewById(R.id.home_text);
         Log.d(TAG, "onCreateView() - Home Fragment");
-        pb = (ProgressBar)home.findViewById(R.id.progressbar);
+        pb = home.findViewById(R.id.progressbar);
         TextView tv = getActivity().findViewById(R.id.appbar_text);
         setBarText(tv);
 
         if (isNetworkAvailable()) {
-            sportEvents = (RecyclerView)home.findViewById(R.id.sportEvents);
+            sportEvents = home.findViewById(R.id.sportEvents);
             LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
             sportEvents.setLayoutManager(layoutManager);
             getEvents();

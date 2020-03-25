@@ -73,9 +73,9 @@ public class Login extends Fragment implements AppBarText {
         View login_page =  inflater.inflate(R.layout.fragment_login, container, false);
         Log.d(TAG, "Login fragment view created");
 
-        Button login = (Button) login_page.findViewById(R.id.login_button);
-        Button register = (Button) login_page.findViewById(R.id.register_button);
-        Button forget_password = (Button)login_page.findViewById(R.id.forget_password_button);
+        Button login = login_page.findViewById(R.id.login_button);
+        Button register = login_page.findViewById(R.id.register_button);
+        Button forget_password = login_page.findViewById(R.id.forget_password_button);
 
         login_email = login_page.findViewById(R.id.login_email);
         login_password = login_page.findViewById(R.id.login_password);

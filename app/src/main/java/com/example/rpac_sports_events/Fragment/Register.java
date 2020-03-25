@@ -60,7 +60,7 @@ public class Register extends Fragment implements AppBarText {
                              Bundle savedInstanceState) {
         View register_page = inflater.inflate(R.layout.fragment_register, container, false);
 
-        Button register = (Button) register_page.findViewById(R.id.register_submit_button);
+        Button register = register_page.findViewById(R.id.register_submit_button);
         TextView tv = getActivity().findViewById(R.id.appbar_text);
         setBarText(tv);
         register_email = register_page.findViewById(R.id.register_email);

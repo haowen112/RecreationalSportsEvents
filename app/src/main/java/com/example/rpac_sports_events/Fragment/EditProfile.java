@@ -54,7 +54,7 @@ public class EditProfile extends Fragment implements AppBarText {
 
         user = FirebaseAuth.getInstance().getCurrentUser();
 
-        Button submit = (Button) edit_profile_page.findViewById(R.id.profile_submit_button);
+        Button submit = edit_profile_page.findViewById(R.id.profile_submit_button);
         TextView tv = getActivity().findViewById(R.id.appbar_text);
         setBarText(tv);
 

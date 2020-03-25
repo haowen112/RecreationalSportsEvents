@@ -106,7 +106,7 @@ public class Favorite extends Fragment implements AppBarText {
             );
         } else {
             v = inflater.inflate(R.layout.fragment_favorite, container, false);
-            pb = (ProgressBar) v.findViewById(R.id.progressbar2);
+            pb = v.findViewById(R.id.progressbar2);
             if (getArguments() == null) {
                 pb.setVisibility(View.GONE);
                 favorites = v.findViewById(R.id.favoriteEvents);

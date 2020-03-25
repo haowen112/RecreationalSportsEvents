@@ -61,7 +61,7 @@ public class RecSportEvents implements Serializable {
 
             if(m.find()) {
                 String date = m.group(0);
-                event.urlDate = date.substring(0, date.length() - 1);;
+                event.urlDate = date.substring(0, date.length() - 1);
             }else{
                 event.urlDate = "";
             }

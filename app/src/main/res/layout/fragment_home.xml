@@ -17,10 +17,11 @@
         android:id="@+id/home_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No events found"
+        android:text="Oops....no events found"
         android:textSize="30dp"
         android:layout_centerInParent="true"
         android:visibility="invisible" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/sportEvents"
         android:layout_width="match_parent"

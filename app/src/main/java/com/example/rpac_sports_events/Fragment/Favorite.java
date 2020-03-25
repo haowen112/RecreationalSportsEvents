@@ -7,8 +7,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
+import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -221,13 +224,34 @@ public class Favorite extends Fragment implements AppBarText {
     }
 
     private boolean isNetworkAvailable() {
-        ConnectivityManager cm =
-                (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        return activeNetwork != null &&
-                activeNetwork.isConnectedOrConnecting();
-
+        if (connectivityManager != null) {
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                NetworkCapabilities capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork());
+                if (capabilities != null) {
+                    if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                        return true;
+                    } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                        return true;
+                    } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                        return true;
+                    }
+                }
+            } else {
+                try {
+                    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+                    if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
+                        Log.i("update_status", "Network is available : true");
+                        return true;
+                    }
+                } catch (Exception e) {
+                    Log.i("update_status", "" + e.getMessage());
+                }
+            }
+        }
+        Log.i("update_status", "Network is available : FALSE ");
+        return false;
     }
 
     public void getSchedule(String title) {

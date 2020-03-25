@@ -47,9 +47,12 @@ public class EventViewModel extends AndroidViewModel {
                 LocalDate localDate = LocalDate.now();
                 LocalDate tomorrow = localDate.plusDays(1);
 
-                // Scrape three days loads of events because of slow website responding time
+//                 Scrape three days loads of events because of slow website responding time
                 String url1 = String.format("https://recsports.osu.edu/events.aspx/%s?d=2", dtf.format(localDate));
                 String url2 = String.format("https://recsports.osu.edu/events.aspx/%s?d=2", dtf.format(tomorrow));
+//
+//                String url1 = "https://recsports.osu.edu/events.aspx/2020/2/9?d=2";
+//                String url2 = "https://recsports.osu.edu/events.aspx/2020/2/10?d=2";
 
                 Document eventUrls;
                 Elements urls;

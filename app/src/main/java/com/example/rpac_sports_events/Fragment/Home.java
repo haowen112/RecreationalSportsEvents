@@ -3,7 +3,9 @@ package com.example.rpac_sports_events.Fragment;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -64,9 +66,8 @@ public class Home extends Fragment implements AppBarText {
             getEvents();
         }else{
             pb.setVisibility(View.GONE);
-            noEvent.setVisibility(View.GONE);
-            Toast.makeText(getActivity(), "No network connection",
-                    Toast.LENGTH_SHORT).show();
+            noEvent.setVisibility(View.VISIBLE);
+            noEvent.setText("No internet connection");
         }
 
 
@@ -79,15 +80,37 @@ public class Home extends Fragment implements AppBarText {
         tv.setText("Events");
     }
 
-
+    // adopted from stackoverflow
+    // https://stackoverflow.com/questions/57277759/getactivenetworkinfo-is-deprecated-in-api-29
     private boolean isNetworkAvailable() {
-        ConnectivityManager cm =
-                (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        return activeNetwork != null &&
-                activeNetwork.isConnectedOrConnecting();
-
+        if (connectivityManager != null) {
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                NetworkCapabilities capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork());
+                if (capabilities != null) {
+                    if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                        return true;
+                    } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                        return true;
+                    } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                        return true;
+                    }
+                }
+            } else {
+                try {
+                    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+                    if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
+                        Log.i("update_status", "Network is available : true");
+                        return true;
+                    }
+                } catch (Exception e) {
+                    Log.i("update_status", "" + e.getMessage());
+                }
+            }
+        }
+        Log.i("update_status", "Network is available : FALSE ");
+        return false;
     }
 
     private void getEvents(){
@@ -96,7 +119,7 @@ public class Home extends Fragment implements AppBarText {
         em.getEvents().observe(getActivity(), new Observer<ArrayList<RecSportEvents>>() {
             @Override
             public void onChanged(final ArrayList<RecSportEvents> recSportEvents) {
-                if (recSportEvents != null) {
+                if (recSportEvents.size() != 0) {
                     eventAdapter = new RecSportEventsAdapter(recSportEvents, new MyItemClickListener() {
                         @Override
                         public void onItemClick(RecSportEvents event) {
@@ -114,10 +137,10 @@ public class Home extends Fragment implements AppBarText {
                     });
                     Log.d(TAG, "onCreateView() - Events created");
                     sportEvents.setAdapter(eventAdapter);
+                    eventAdapter.notifyDataSetChanged();
                 } else {
                     noEvent.setVisibility(View.VISIBLE);
                 }
-                eventAdapter.notifyDataSetChanged();
                 Log.d(TAG, "onCreateView() - Events adapter notified");
                 pb.setVisibility(View.GONE);
             }

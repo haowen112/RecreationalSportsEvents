@@ -31,7 +31,8 @@ public class FavoriteEventsScheduleAdapter extends RecyclerView.Adapter<Favorite
         }
 
         public void bind(final FavoriteEvents event, final FavoriteItemClickListener listener) {
-            title.setText(event.getDate() + " " + event.getTime());
+            title.setText(event.getDate() + "\n" + event.getTime());
+            title.setTextSize(20);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

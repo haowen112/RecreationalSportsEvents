@@ -55,6 +55,8 @@ public class RecSportEventsAdapter extends RecyclerView.Adapter<RecSportEventsAd
             }else if(DAYS.between(localDate, url) == 1){
                 card.setCardBackgroundColor(Color.parseColor("#F0F0F0"));
                 eventTime.setText("Tomorrow "+data.getTime());
+            } else {
+                eventTime.setText(data.getTime());
             }
 
             eventTitle.setText(data.getTitle());

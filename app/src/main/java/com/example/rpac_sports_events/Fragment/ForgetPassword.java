@@ -1,6 +1,12 @@
 package com.example.rpac_sports_events.Fragment;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,26 +48,31 @@ public class ForgetPassword extends Fragment implements AppBarText {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(email.length()<=0){
-                    Toast.makeText(getActivity(), "Please enter your email correctly",
-                            Toast.LENGTH_SHORT).show();
-                }else{
-                    String email_entered = email.getText().toString();
-                    if(email_entered.matches(emailPattern)){
-                        auth.sendPasswordResetEmail(email_entered)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            Toast.makeText(getActivity(), "Email sent",
-                                                    Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
-                    }else{
+                if (isNetworkAvailable()) {
+                    if (email.length() <= 0) {
                         Toast.makeText(getActivity(), "Please enter your email correctly",
                                 Toast.LENGTH_SHORT).show();
+                    } else {
+                        String email_entered = email.getText().toString();
+                        if (email_entered.matches(emailPattern)) {
+                            auth.sendPasswordResetEmail(email_entered)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(getActivity(), "Email sent",
+                                                        Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                        } else {
+                            Toast.makeText(getActivity(), "Please enter your email correctly",
+                                    Toast.LENGTH_SHORT).show();
+                        }
                     }
+                } else {
+                    Toast.makeText(getActivity(), "No Network connection",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -73,5 +84,36 @@ public class ForgetPassword extends Fragment implements AppBarText {
     @Override
     public void setBarText(TextView tv) {
         tv.setText("Reset Password");
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (connectivityManager != null) {
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                NetworkCapabilities capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork());
+                if (capabilities != null) {
+                    if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                        return true;
+                    } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                        return true;
+                    } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                        return true;
+                    }
+                }
+            } else {
+                try {
+                    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+                    if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
+                        Log.i("update_status", "Network is available : true");
+                        return true;
+                    }
+                } catch (Exception e) {
+                    Log.i("update_status", "" + e.getMessage());
+                }
+            }
+        }
+        Log.i("update_status", "Network is available : FALSE ");
+        return false;
     }
 }

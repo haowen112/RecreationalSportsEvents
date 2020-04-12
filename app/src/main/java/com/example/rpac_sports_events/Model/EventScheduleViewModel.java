@@ -54,15 +54,15 @@ public class EventScheduleViewModel extends AndroidViewModel {
                 LocalDate dayAfterTomorrow = localDate.plusDays(2);
 
                 // Scrape three days loads of events because of slow website responding time
-//                String url1 = String.format("https://recsports.osu.edu/events.aspx/%s?d=2&q=", dtf.format(localDate),title);
-//                String url2 = String.format("https://recsports.osu.edu/events.aspx/%s?d=2&q=", dtf.format(tomorrow), title);
-//                String url3 = String.format("https://recsports.osu.edu/events.aspx/%s?d=2&q=", dtf.format(dayAfterTomorrow), title);
+                String url1 = String.format("https://recsports.osu.edu/events.aspx/%s?d=2&q=%s", dtf.format(localDate), title);
+                String url2 = String.format("https://recsports.osu.edu/events.aspx/%s?d=2&q=%s", dtf.format(tomorrow), title);
+                String url3 = String.format("https://recsports.osu.edu/events.aspx/%s?d=2&q=%s", dtf.format(dayAfterTomorrow), title);
 
 
                 //temporary place holder
-                String url1 = String.format("https://recsports.osu.edu/events.aspx/%s?d=2&q=%s", "2020/2/3", title);
-                String url2 = String.format("https://recsports.osu.edu/events.aspx/%s?d=2&q=%s", "2020/2/5", title);
-                String url3 = String.format("https://recsports.osu.edu/events.aspx/%s?d=2&q=%s", "2020/2/6", title);
+//                String url1 = String.format("https://recsports.osu.edu/events.aspx/%s?d=2&q=%s", "2020/2/3", title);
+//                String url2 = String.format("https://recsports.osu.edu/events.aspx/%s?d=2&q=%s", "2020/2/5", title);
+//                String url3 = String.format("https://recsports.osu.edu/events.aspx/%s?d=2&q=%s", "2020/2/6", title);
 
 
                 Document eventUrls;
@@ -132,9 +132,13 @@ public class EventScheduleViewModel extends AndroidViewModel {
 
             @Override
             protected void onPostExecute(ArrayList<FavoriteEvents> events) {
-                event.setValue(events);
+                event.postValue(events);
             }
         }.execute();
+    }
+
+    public void clear() {
+        event.postValue(null);
     }
 }
 

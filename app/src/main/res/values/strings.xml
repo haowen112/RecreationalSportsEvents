@@ -4,4 +4,70 @@
     <string name="tweets">Tweet</string>
     <string name="favorites">Favorite</string>
     <string name="user">About You</string>
+    <string name="no_network">No network connection</string>
+    <string name="feed">Feed</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+
+
+    <!-- Change password -->
+    <string name="change_password">Change Password</string>
+    <string name="pass_no_match">Passwords don\'t match</string>
+    <string name="choose_pass">Please try another password</string>
+    <string name="pass_updated">Password updated! Please sign-in</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard">Dashboard</string>
+    <string name="username_setup">Please setup your username</string>
+
+    <!-- Detailed events -->
+    <string name="detailed_event">Event Detail</string>
+    <string name="added_to_calendar">Added to calendar</string>
+    <string name="event_already_in">Event already added</string>
+    <string name="added_to_favorite">Added to favorite</string>
+    <string name="database_error">Database connection error</string>
+    <string name="login_first">Please login first</string>
+
+    <!-- Edit profile -->
+    <string name="username_update">Username updated. You may need to sign-in again to see the changes.</string>
+    <string name="username_invalid">Invalid Username</string>
+    <string name="edit_username">Edit Username</string>
+
+    <!-- Favorite -->
+    <string name="select_option">Please select an option</string>
+    <string name="event_delete">Event deleted</string>
+    <string name="delete">delete</string>
+    <string name="get_schedule">Get Schedule</string>
+    <string name="cancel">Cancel</string>
+    <string name="no_event_schedule">No events found in 3 days</string>
+    <string name="calendar">Add to calendar</string>
+
+
+    <!-- Forget password -->
+    <string name="reset_password">Reset Password</string>
+    <string name="email_invalid">Invalid Email</string>
+    <string name="email_sent">Email Sent</string>
+    <string name="enter_credential">Please enter your email and password</string>
+    <string name="welcome_back">Welcome Back!</string>
+    <string name="wrong_credential">Email/password doesn\'t match</string>
+    <string name="register_success">Registered!</string>
+    <string name="password_no_match">Passwords don\'t match</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="forget_password">forget password</string>
+    <string name="re_password">Re-enter password</string>
+    <string name="submit">submit</string>
+    <string name="no_event">Oop...no events found</string>
+    <string name="add_to_calendar">Add to calendar</string>
+    <string name="add_to_favorite">Add to favorite</string>
+    <string name="hello">Hello</string>
+    <string name="new_user">new user</string>
+    <string name="username_not_avaiable">username not yet set</string>
+    <string name="sign_out">sign out</string>
+    <string name="new_username">Enter new username</string>
+    <string name="favorite_text">no favorite events</string>
+    <string name="favorite_schedule_text">no schedule found in 3 days</string>
+    <string name="event_schedule">Schedule</string>
+
+
 </resources>

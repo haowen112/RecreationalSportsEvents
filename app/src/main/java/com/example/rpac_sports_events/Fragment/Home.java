@@ -67,7 +67,7 @@ public class Home extends Fragment implements AppBarText {
         }else{
             pb.setVisibility(View.GONE);
             noEvent.setVisibility(View.VISIBLE);
-            noEvent.setText("No internet connection");
+            noEvent.setText(R.string.no_network);
         }
 
 
@@ -77,7 +77,7 @@ public class Home extends Fragment implements AppBarText {
 
     @Override
     public void setBarText(TextView tv){
-        tv.setText("Events");
+        tv.setText(R.string.events);
     }
 
     // adopted from stackoverflow

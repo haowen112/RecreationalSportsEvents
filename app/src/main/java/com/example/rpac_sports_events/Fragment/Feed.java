@@ -79,14 +79,14 @@ public class Feed extends Fragment implements AppBarText {
             getToken();
         }else{
             noEvent.setVisibility(View.VISIBLE);
-            noEvent.setText("No internet connection");
+            noEvent.setText(R.string.no_network);
         }
         return v;
     }
 
     @Override
     public void setBarText(TextView tv){
-        tv.setText("Feeds");
+        tv.setText(R.string.feed);
     }
 
 

@@ -75,8 +75,7 @@ public class EditProfile extends Fragment implements AppBarText {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
                                                 Log.d(TAG, "User profile updated.");
-                                                Toast.makeText(getActivity(), "Username updated. You may need to sign-in again to " +
-                                                                "see the change",
+                                                Toast.makeText(getActivity(), R.string.username_update,
                                                         Toast.LENGTH_SHORT).show();
                                             }
                                         }
@@ -85,7 +84,8 @@ public class EditProfile extends Fragment implements AppBarText {
                             navController.navigate(R.id.action_edit_profile_to_dashboard);
 
                         }else{
-                            Toast.makeText(getActivity(), "Invalid username",
+                            Toast.makeText(getActivity(),
+                                    R.string.username_invalid,
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -97,6 +97,6 @@ public class EditProfile extends Fragment implements AppBarText {
 
     @Override
     public void setBarText(TextView tv) {
-        tv.setText("Edit Username");
+        tv.setText(R.string.edit_username);
     }
 }

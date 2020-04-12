@@ -91,26 +91,27 @@ public class DetailedEvents extends Fragment implements AppBarText {
                                     boolean added = false;
                                     for(DataSnapshot data: dataSnapshot.getChildren()){
                                         if(data.getValue().equals(event[0])){
-                                            Toast.makeText(getActivity(), "Event already added",
+                                            Toast.makeText(getActivity(), R.string.event_already_in,
                                                     Toast.LENGTH_SHORT).show();
                                             added = true;
                                         }
                                     }
                                     if(!added){
                                         myRef.child("user").child(uid).push().setValue(event[0]);
-                                        Toast.makeText(getActivity(), "Event added to favorite",
+                                        Toast.makeText(getActivity(), R.string.added_to_favorite,
                                                 Toast.LENGTH_SHORT).show();
                                     }
                                 }
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                                    Toast.makeText(getActivity(), "Database connection error",
+                                    Toast.makeText(getActivity(),
+                                            R.string.database_error,
                                             Toast.LENGTH_SHORT).show();
                                 }
                             });
 
                         }else{
-                            Toast.makeText(getActivity(), "Please login first",
+                            Toast.makeText(getActivity(), R.string.login_first,
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -203,7 +204,7 @@ public class DetailedEvents extends Fragment implements AppBarText {
                     @Override
                     public void accept(Boolean saveResult) throws Exception {
                         if (saveResult) {
-                            Toast.makeText(getActivity().getApplicationContext(), "Add to calendar successful", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity().getApplicationContext(), R.string.added_to_calendar, Toast.LENGTH_SHORT).show();
                         } else {
                             CalendarPermissionUtil.showWaringDialog(getActivity());
                         }
@@ -256,7 +257,7 @@ public class DetailedEvents extends Fragment implements AppBarText {
 
     @Override
     public void setBarText(TextView tv) {
-        tv.setText("Events");
+        tv.setText(R.string.detailed_event);
     }
 
 

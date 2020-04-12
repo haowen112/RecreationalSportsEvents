@@ -76,7 +76,7 @@ public class Register extends Fragment implements AppBarText {
                     public void onClick(View v) {
                         if(isNetworkAvailable()) {
                             if (register_email.length() <= 0 || register_password.length() <= 0 || register_password2.length() <= 0) {
-                                Toast.makeText(getActivity(), "Please enter your credentials",
+                                Toast.makeText(getActivity(), R.string.enter_credential,
                                         Toast.LENGTH_SHORT).show();
                             } else {
                                 String email = register_email.getText().toString().trim();
@@ -90,7 +90,7 @@ public class Register extends Fragment implements AppBarText {
                                                     @Override
                                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                                         if (task.isSuccessful()) {
-                                                            Toast.makeText(getActivity(), "Register Successfully", Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(getActivity(), R.string.register_success, Toast.LENGTH_SHORT).show();
                                                             Log.d(TAG, "createUserWithEmail:success");
                                                             NavController navController = Navigation.findNavController(getActivity(), R.id.navigation_host_fragment);
                                                             navController.navigate(R.id.action_register_to_login2);
@@ -102,14 +102,14 @@ public class Register extends Fragment implements AppBarText {
                                                 }
                                         );
                                     } else {
-                                        Toast.makeText(getActivity(), "Passwords don't match", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity(), R.string.password_no_match, Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
-                                    Toast.makeText(getActivity(), "Email entered is wrong", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), R.string.email_invalid, Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }else{
-                            Toast.makeText(getActivity(), "No network connection", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -150,6 +150,6 @@ public class Register extends Fragment implements AppBarText {
 
     @Override
     public void setBarText(TextView tv) {
-        tv.setText("Register");
+        tv.setText(R.string.register);
     }
 }

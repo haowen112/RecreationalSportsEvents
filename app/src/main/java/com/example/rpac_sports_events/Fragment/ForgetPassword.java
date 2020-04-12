@@ -50,7 +50,7 @@ public class ForgetPassword extends Fragment implements AppBarText {
             public void onClick(View v) {
                 if (isNetworkAvailable()) {
                     if (email.length() <= 0) {
-                        Toast.makeText(getActivity(), "Please enter your email correctly",
+                        Toast.makeText(getActivity(), R.string.email_invalid,
                                 Toast.LENGTH_SHORT).show();
                     } else {
                         String email_entered = email.getText().toString();
@@ -60,18 +60,18 @@ public class ForgetPassword extends Fragment implements AppBarText {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
-                                                Toast.makeText(getActivity(), "Email sent",
+                                                Toast.makeText(getActivity(), R.string.email_sent,
                                                         Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     });
                         } else {
-                            Toast.makeText(getActivity(), "Please enter your email correctly",
+                            Toast.makeText(getActivity(), R.string.email_invalid,
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
                 } else {
-                    Toast.makeText(getActivity(), "No Network connection",
+                    Toast.makeText(getActivity(), R.string.no_network,
                             Toast.LENGTH_SHORT).show();
                 }
             }
@@ -83,7 +83,7 @@ public class ForgetPassword extends Fragment implements AppBarText {
 
     @Override
     public void setBarText(TextView tv) {
-        tv.setText("Reset Password");
+        tv.setText(R.string.reset_password);
     }
 
     private boolean isNetworkAvailable() {

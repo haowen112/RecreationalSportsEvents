@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="You are not signed in yet"
+        android:text="@string/login_first"
         android:textSize="30dp"/>
 
         <Button
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:background="@color/scarlet"
-            android:text="Login now"
+            android:text="@string/login"
             android:textColor="@color/white"
             android:layout_gravity="center"/>
     </LinearLayout>

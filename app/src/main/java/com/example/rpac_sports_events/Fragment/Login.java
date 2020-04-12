@@ -55,7 +55,7 @@ public class Login extends Fragment implements AppBarText {
                 navController.navigate(R.id.action_login_to_home);
             }
         };
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+        requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), callback);
 
         if(user!=null){
             Log.d(TAG, "user signed in");
@@ -89,7 +89,7 @@ public class Login extends Fragment implements AppBarText {
                     public void onClick(View v) {
                         if (isNetworkAvailable()) {
                             if (login_email.length() <= 0 || login_password.length() <= 0) {
-                                Toast.makeText(getActivity(), "Please enter your credentials",
+                                Toast.makeText(getActivity(), R.string.enter_credential,
                                         Toast.LENGTH_SHORT).show();
                             } else {
                                 String email = login_email.getText().toString().trim();
@@ -101,21 +101,21 @@ public class Login extends Fragment implements AppBarText {
                                                 if (task.isSuccessful()) {
                                                     // Sign in success, update UI with the signed-in user's information
                                                     Log.d(TAG, "signInWithEmail:success");
-                                                    Toast.makeText(getActivity(), "Welcome Back!",
+                                                    Toast.makeText(getActivity(), R.string.welcome_back,
                                                             Toast.LENGTH_SHORT).show();
                                                     NavController navController = Navigation.findNavController(getActivity(), R.id.navigation_host_fragment);
                                                     navController.navigate(R.id.action_login_to_dashboard);
                                                 } else {
                                                     // If sign in fails, display a message to the user.
                                                     Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                                    Toast.makeText(getActivity(), "Email or password wrong",
+                                                    Toast.makeText(getActivity(), R.string.wrong_credential,
                                                             Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                         });
                             }
                         }else{
-                            Toast.makeText(getActivity(), "No network connection",
+                            Toast.makeText(getActivity(), R.string.no_network,
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -128,7 +128,7 @@ public class Login extends Fragment implements AppBarText {
 
     @Override
     public void setBarText(TextView tv){
-        tv.setText("Login");
+        tv.setText(R.string.login);
     }
 
     private boolean isNetworkAvailable() {

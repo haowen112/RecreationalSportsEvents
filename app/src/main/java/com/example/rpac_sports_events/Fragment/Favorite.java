@@ -1,7 +1,6 @@
 package com.example.rpac_sports_events.Fragment;
 
 import android.Manifest;
-import android.app.Application;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,10 +8,10 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,6 @@ import com.example.rpac_sports_events.Favorite.FavoriteEventsScheduleAdapter;
 import com.example.rpac_sports_events.Interface.AppBarText;
 import com.example.rpac_sports_events.Interface.FavoriteItemClickListener;
 import com.example.rpac_sports_events.Model.EventScheduleViewModel;
-import com.example.rpac_sports_events.Model.EventViewModel;
 import com.example.rpac_sports_events.Model.MyViewModelFactory;
 import com.example.rpac_sports_events.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,6 +49,14 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -68,18 +74,12 @@ public class Favorite extends Fragment implements AppBarText {
     private DatabaseReference myRef;
     private ArrayList<FavoriteEvents> events;
     private FavoriteEventsAdapter adapter;
-    private FavoriteEventsScheduleAdapter scheduleAdapter;
-    private FavoriteItemClickListener mListener;
     private RecyclerView favorites;
-    private RecyclerView schedule;
     private TextView noFavorite;
-    private Dialog dialog;
     private ProgressBar pb;
-    private EventScheduleViewModel em;
-    private FavoriteEvents temp;
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         user = FirebaseAuth.getInstance().getCurrentUser();
         myRef = FirebaseDatabase.getInstance().getReference();
@@ -107,8 +107,9 @@ public class Favorite extends Fragment implements AppBarText {
         } else {
             v = inflater.inflate(R.layout.fragment_favorite, container, false);
             pb = v.findViewById(R.id.progressbar2);
-            if (getArguments() == null) {
-                pb.setVisibility(View.GONE);
+            pb.setVisibility(View.GONE);
+
+            if (isNetworkAvailable()) {
                 favorites = v.findViewById(R.id.favoriteEvents);
                 noFavorite = v.findViewById(R.id.favorite_text);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -140,48 +141,41 @@ public class Favorite extends Fragment implements AppBarText {
                     }
                 });
             } else {
-                schedule = v.findViewById(R.id.favoriteEvents);
                 noFavorite = v.findViewById(R.id.favorite_text);
-                if (isNetworkAvailable()) {
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-                    schedule.setLayoutManager(layoutManager);
-                    getSchedule(getArguments().getString("EVENT_TITLE"));
-                } else {
-                    pb.setVisibility(View.GONE);
-                    Toast.makeText(getActivity(), "No network connection",
-                            Toast.LENGTH_SHORT).show();
-                }
+                noFavorite.setText(R.string.no_network);
+                noFavorite.setVisibility(View.VISIBLE);
 
             }
         }
+
         setBarText(tv);
         return v;
 
     }
 
     @Override
-    public void setBarText(TextView tv){
-        tv.setText("Favorites");
+    public void setBarText(TextView tv) {
+        tv.setText(R.string.favorites);
     }
 
 
-    public void alertBuilder(String title){
+    public void alertBuilder(String title) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(title);
-        builder.setMessage("Please select an option. ");
+        builder.setMessage(R.string.select_option);
 
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                switch(which){
+                switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
                         myRef.child("user").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for(DataSnapshot data: dataSnapshot.getChildren()){
-                                    if(data.getValue().equals(title)){
+                                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                                    if (data.getValue().equals(title)) {
                                         myRef.child("user").child(user.getUid()).child(data.getKey()).removeValue();
-                                        Toast.makeText(getActivity(), "Event deleted",
+                                        Toast.makeText(getActivity(), R.string.event_delete,
                                                 Toast.LENGTH_SHORT).show();
                                         NavController navController = Navigation.findNavController(getActivity(), R.id.navigation_host_fragment);
                                         navController.navigate(R.id.action_favorite_self);
@@ -208,9 +202,9 @@ public class Favorite extends Fragment implements AppBarText {
                 }
             }
         };
-        builder.setNeutralButton("Get Schedule", dialogClickListener);
-        builder.setPositiveButton("Delete", dialogClickListener);
-        builder.setNegativeButton("Cancel", dialogClickListener);
+        builder.setNeutralButton(R.string.get_schedule, dialogClickListener);
+        builder.setPositiveButton(R.string.delete, dialogClickListener);
+        builder.setNegativeButton(R.string.cancel, dialogClickListener);
         AlertDialog dialog = builder.create();
         dialog.show();
 
@@ -220,7 +214,7 @@ public class Favorite extends Fragment implements AppBarText {
         Bundle bld = new Bundle();
         bld.putString("EVENT_TITLE", title);
         NavController navController = Navigation.findNavController(getActivity(), R.id.navigation_host_fragment);
-        navController.navigate(R.id.action_favorite_self, bld);
+        navController.navigate(R.id.action_favorite_to_favorite_schedule, bld);
     }
 
     private boolean isNetworkAvailable() {
@@ -253,178 +247,4 @@ public class Favorite extends Fragment implements AppBarText {
         Log.i("update_status", "Network is available : FALSE ");
         return false;
     }
-
-    public void getSchedule(String title) {
-//      em = new ViewModelProvider(requireActivity(), new MyViewModelFactory(getActivity().getApplication(), title)).get(EventScheduleViewModel.class);
-        em = new ViewModelProvider(requireActivity(), new MyViewModelFactory(getActivity().getApplication(), "Cardio Barbell")).get(EventScheduleViewModel.class);
-        em.getSchedule().observe(getActivity(), new Observer<ArrayList<FavoriteEvents>>() {
-            @Override
-            public void onChanged(ArrayList<FavoriteEvents> favoriteEvents) {
-                if (favoriteEvents != null) {
-                    scheduleAdapter = new FavoriteEventsScheduleAdapter(favoriteEvents, new FavoriteItemClickListener() {
-                        @Override
-                        public void onItemClick(FavoriteEvents event) {
-                            temp = event;
-                            alertScheduleBuilder(event);
-                        }
-                    });
-                    schedule.setAdapter(scheduleAdapter);
-                    pb.setVisibility(View.GONE);
-                } else {
-                    noFavorite.setVisibility(View.VISIBLE);
-                    noFavorite.setText("No events scheduled in 3 days");
-                }
-            }
-        });
-
-    }
-
-    public void alertScheduleBuilder(FavoriteEvents event) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(event.getTitle());
-        builder.setMessage("Please select an option. ");
-
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        fetchPermission(99);
-                        break;
-
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        break;
-                }
-            }
-        };
-        builder.setPositiveButton("Add to calendar", dialogClickListener);
-        builder.setNegativeButton("Cancel", dialogClickListener);
-        AlertDialog dialog = builder.create();
-        dialog.show();
-
-    }
-
-    public void fetchPermission(int requestCode) {
-        int selfPermission;
-
-        try {
-            selfPermission = ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_CALENDAR);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
-
-        if (selfPermission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_CALENDAR,
-                    Manifest.permission.READ_CALENDAR}, requestCode);
-        } else {
-            Observable.create(new ObservableOnSubscribe<Boolean>() {
-                @Override
-                public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-
-                    if (!CalendarReminderUtils.isNoCursor(getActivity())) {
-                        addCalender();
-                        e.onNext(true);
-                    } else {
-                        e.onNext(false);
-                    }
-
-                }
-            }).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<Boolean>() {
-                        @Override
-                        public void accept(Boolean saveResult) throws Exception {
-                            if (!saveResult) {
-                                CalendarPermissionUtil.showWaringDialog(getActivity());
-                            }
-                        }
-                    });
-        }
-    }
-
-    private void addCalender() {
-        Observable.create(new ObservableOnSubscribe<Boolean>() {
-            @Override
-            public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                CalendarReminderUtils.deleteCalendarEvent(getActivity(), temp.getTitle());
-                String[] date = temp.getUrlDate().split("/");
-                String[] time = temp.getTime().split(" ");
-                String[] startT = time[0].split(":");
-                String[] endT = time[3].split(":");
-                String ampm = time[1];
-
-                long startTime = getMsFromDayTime(
-                        Integer.parseInt(date[0]), Integer.parseInt(date[1]) - 1,
-                        Integer.parseInt(date[2]), Integer.parseInt(startT[0]),
-                        Integer.parseInt(startT[1]));
-                long endTime = getMsFromDayTime(
-                        Integer.parseInt(date[0]), Integer.parseInt(date[1]) - 1,
-                        Integer.parseInt(date[2]), Integer.parseInt(endT[0]),
-                        Integer.parseInt(endT[1]));
-                CalendarReminderUtils.addCalendarEvent(
-                        getActivity(), temp.getTitle(), temp.getDescription(), startTime, endTime, temp.getLocation(), ampm
-                );
-
-                e.onNext(!CalendarReminderUtils.isNoCalendarData(getActivity().getApplicationContext(), temp.getTitle()));
-            }
-        }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Boolean>() {
-                    @Override
-                    public void accept(Boolean saveResult) throws Exception {
-                        if (saveResult) {
-                            Toast.makeText(getActivity().getApplicationContext(), "Add to calendar successful", Toast.LENGTH_SHORT).show();
-                        } else {
-                            CalendarPermissionUtil.showWaringDialog(getActivity());
-                        }
-                    }
-                });
-    }
-
-    public static long getMsFromDayTime(int year, int month, int day, int hour, int minute) {
-        java.util.Calendar cal = java.util.Calendar.getInstance();
-        cal.set(java.util.Calendar.YEAR, year);
-        cal.set(java.util.Calendar.MONTH, month);
-        cal.set(java.util.Calendar.DAY_OF_MONTH, day);
-        cal.set(java.util.Calendar.HOUR_OF_DAY, hour);
-        cal.set(java.util.Calendar.SECOND, 0);
-        cal.set(java.util.Calendar.MINUTE, minute);
-        cal.set(Calendar.MILLISECOND, 0);
-        return cal.getTimeInMillis();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 99) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Observable.create(new ObservableOnSubscribe<Boolean>() {
-                    @Override
-                    public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                        if (!CalendarReminderUtils.isNoCursor(getActivity())) {
-                            addCalender();
-                            e.onNext(true);
-                        } else {
-                            e.onNext(false);
-                        }
-                    }
-                }).subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Consumer<Boolean>() {
-                            @Override
-                            public void accept(Boolean saveResult) throws Exception {
-                                if (!saveResult) {
-                                    CalendarPermissionUtil.showWaringDialog(getActivity());
-                                }
-                            }
-                        });
-            } else {
-                CalendarPermissionUtil.showWaringDialog(getActivity());
-            }
-        }
-    }
-
-
-
 }

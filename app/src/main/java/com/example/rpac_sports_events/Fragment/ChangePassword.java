@@ -74,7 +74,7 @@ public class ChangePassword extends Fragment implements AppBarText {
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()) {
                                                     Log.d(TAG, "User password updated.");
-                                                    Toast.makeText(getActivity(), "Password updated! Please sign-in",
+                                                    Toast.makeText(getActivity(), R.string.pass_updated,
                                                             Toast.LENGTH_SHORT).show();
                                                 }
                                             }
@@ -83,11 +83,11 @@ public class ChangePassword extends Fragment implements AppBarText {
                                 NavController navController = Navigation.findNavController(getActivity(), R.id.navigation_host_fragment);
                                 navController.navigate(R.id.action_change_password_to_login);
                             }else{
-                                Toast.makeText(getActivity(), "Passwords don't match",
+                                Toast.makeText(getActivity(), R.string.pass_no_match,
                                         Toast.LENGTH_SHORT).show();
                             }
                         }else{
-                            Toast.makeText(getActivity(), "Please choose another password",
+                            Toast.makeText(getActivity(), R.string.choose_pass,
                                     Toast.LENGTH_SHORT).show();
                         }
 
@@ -99,6 +99,6 @@ public class ChangePassword extends Fragment implements AppBarText {
 
     @Override
     public void setBarText(TextView tv) {
-        tv.setText("Change Password");
+        tv.setText(R.string.change_password);
     }
 }

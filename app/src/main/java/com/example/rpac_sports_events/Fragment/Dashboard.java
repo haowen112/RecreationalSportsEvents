@@ -80,9 +80,8 @@ public class Dashboard extends Fragment implements AppBarText {
             String name = user.getDisplayName();
             String email = user.getEmail();
 
-            String temp = "Please setup your username";
             if(name==null){
-                dashboard_username.setText(temp);
+                dashboard_username.setText(R.string.username_setup);
             }else {
                 dashboard_name.setText(name);
                 dashboard_username.setText(name);
@@ -98,7 +97,7 @@ public class Dashboard extends Fragment implements AppBarText {
 
     @Override
     public void setBarText(TextView tv){
-        tv.setText("Dashboard");
+        tv.setText(R.string.dashboard);
     }
 
 }

@@ -50,10 +50,11 @@
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"/>
         <action
+            android:id="@+id/action_favorite_to_favorite_schedule"
+            app:destination="@id/favorite_schedule" />
+        <action
             android:id="@+id/action_favorite_self"
-            app:destination="@id/favorite"
-            app:popUpTo="@id/favorite"
-            app:popUpToInclusive="true" />
+            app:destination="@id/favorite" />
     </fragment>
 
     <fragment
@@ -154,6 +155,16 @@
             app:destination="@id/dashboard"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/favorite_schedule"
+        android:name="com.example.rpac_sports_events.Fragment.FavoriteSchedule"
+        android:label="fragment_favorite_schedule"
+        tools:layout="@layout/fragment_favorite_schedule">
+        <action
+            android:id="@+id/action_favorite_schedule_to_favorite"
+            app:destination="@id/favorite" />
     </fragment>
 
 </navigation>

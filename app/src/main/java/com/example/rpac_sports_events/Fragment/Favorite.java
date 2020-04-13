@@ -99,8 +99,9 @@ public class Favorite extends Fragment implements AppBarText {
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            NavController navController = Navigation.findNavController(getActivity(), R.id.navigation_host_fragment);
-                            navController.navigate(R.id.action_favorite_to_login);
+//                            NavController navController = Navigation.findNavController(getActivity(), R.id.navigation_host_fragment);
+//                            navController.navigate(R.id.action_favorite_to_login);
+                            Navigation.findNavController(v).navigate(R.id.login);
                         }
                     }
             );
@@ -148,7 +149,9 @@ public class Favorite extends Fragment implements AppBarText {
             }
         }
 
-        setBarText(tv);
+        if (tv != null) {
+            setBarText(tv);
+        }
         return v;
 
     }

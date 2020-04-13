@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rpac_sports_events.Interface.AppBarText;
+import com.example.rpac_sports_events.MainActivity;
 import com.example.rpac_sports_events.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -46,16 +47,15 @@ public class Login extends Fragment implements AppBarText {
         user = FirebaseAuth.getInstance().getCurrentUser();
         Log.d(TAG, "Getting current user");
 
-
         // This callback will only be called when MyFragment is at least Started.
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
-            @Override
-            public void handleOnBackPressed() {
-                NavController navController = Navigation.findNavController(getActivity(), R.id.navigation_host_fragment);
-                navController.navigate(R.id.action_login_to_home);
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), callback);
+//        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                NavController navController = Navigation.findNavController(getActivity(), R.id.navigation_host_fragment);
+//                navController.navigate(R.id.action_login_to_home);
+//            }
+//        };
+//        requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), callback);
 
         if(user!=null){
             Log.d(TAG, "user signed in");
@@ -81,7 +81,9 @@ public class Login extends Fragment implements AppBarText {
         login_password = login_page.findViewById(R.id.login_password);
 
         TextView tv = getActivity().findViewById(R.id.appbar_text);
-        setBarText(tv);
+        if (tv != null) {
+            setBarText(tv);
+        }
 
         login.setOnClickListener(
                 new View.OnClickListener() {
@@ -101,15 +103,16 @@ public class Login extends Fragment implements AppBarText {
                                                 if (task.isSuccessful()) {
                                                     // Sign in success, update UI with the signed-in user's information
                                                     Log.d(TAG, "signInWithEmail:success");
-                                                    Toast.makeText(getActivity(), R.string.welcome_back,
-                                                            Toast.LENGTH_SHORT).show();
+//                                                    Toast.makeText(getActivity(), R.string.welcome_back,
+//                                                            Toast.LENGTH_SHORT).show();
                                                     NavController navController = Navigation.findNavController(getActivity(), R.id.navigation_host_fragment);
                                                     navController.navigate(R.id.action_login_to_dashboard);
+//                                                    Navigation.findNavController(login_page).navigate(R.id.dashboard);
                                                 } else {
                                                     // If sign in fails, display a message to the user.
                                                     Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                                    Toast.makeText(getActivity(), R.string.wrong_credential,
-                                                            Toast.LENGTH_SHORT).show();
+//                                                    Toast.makeText(getActivity(), R.string.wrong_credential,
+//                                                            Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                         });

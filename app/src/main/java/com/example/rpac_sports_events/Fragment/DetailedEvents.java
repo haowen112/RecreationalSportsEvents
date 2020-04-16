@@ -182,7 +182,8 @@ public class DetailedEvents extends Fragment implements AppBarText {
                 String[] time = event[1].split(" ");
                 String[] startT = time[0].split(":");
                 String[] endT = time[3].split(":");
-                String ampm = time[1];
+                String ampm1 = time[1];
+                String ampm2 = time[4];
 
                     long startTime = getMsFromDayTime(
                             Integer.parseInt(date[0]), Integer.parseInt(date[1]) - 1,
@@ -192,9 +193,20 @@ public class DetailedEvents extends Fragment implements AppBarText {
                             Integer.parseInt(date[0]), Integer.parseInt(date[1]) - 1,
                             Integer.parseInt(date[2]), Integer.parseInt(endT[0]),
                             Integer.parseInt(endT[1]));
+                if (startT[0].equals("12") && endT[0].equals("12")) {
                     CalendarReminderUtils.addCalendarEvent(
-                            getActivity(), event[0], event[3], startTime, endTime, event[2], ampm
+                            getActivity(), event[0], event[3], startTime, endTime, event[2], "AM", "AM"
                     );
+                } else if (startT[0].equals("12") && !endT[0].equals("12")) {
+                    CalendarReminderUtils.addCalendarEvent(
+                            getActivity(), event[0], event[3], startTime, endTime, event[2], "AM", ampm2
+                    );
+                } else {
+                    CalendarReminderUtils.addCalendarEvent(
+                            getActivity(), event[0], event[3], startTime, endTime, event[2], ampm1, ampm2
+                    );
+                }
+
 
                 e.onNext(!CalendarReminderUtils.isNoCalendarData(getActivity().getApplicationContext(), event[0]));
             }

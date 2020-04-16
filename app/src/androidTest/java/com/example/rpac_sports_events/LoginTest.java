@@ -1,22 +1,31 @@
 package com.example.rpac_sports_events;
 
+import android.os.IBinder;
+import android.view.WindowManager;
+
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.navigation.Navigation;
 import androidx.navigation.testing.TestNavHostController;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.Espresso;
+import androidx.test.espresso.Root;
 import androidx.test.espresso.assertion.ViewAssertions;
+import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 import com.example.rpac_sports_events.Fragment.Login;
 
+import org.hamcrest.Description;
+import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.*;
 
 import static androidx.test.espresso.Espresso.onView;
@@ -26,9 +35,11 @@ import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
+/**
+ * Before running this test makesure, user is not signed in
+ */
 @RunWith(AndroidJUnit4.class)
 public class LoginTest {
-
 
     @Test
     public void checkRegisterButtonDisplay() {
@@ -76,6 +87,4 @@ public class LoginTest {
         assertThat(navController.getCurrentDestination().getId(), is(R.id.forget_password));
 
     }
-
-
 }

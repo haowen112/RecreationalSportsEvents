@@ -336,7 +336,8 @@ public class FavoriteSchedule extends Fragment implements AppBarText {
                 String[] time = temp.getTime().split(" ");
                 String[] startT = time[0].split(":");
                 String[] endT = time[3].split(":");
-                String ampm = time[1];
+                String ampm1 = time[1];
+                String ampm2 = time[4];
 
                 long startTime = getMsFromDayTime(
                         Integer.parseInt(date[0]), Integer.parseInt(date[1]) - 1,
@@ -346,9 +347,21 @@ public class FavoriteSchedule extends Fragment implements AppBarText {
                         Integer.parseInt(date[0]), Integer.parseInt(date[1]) - 1,
                         Integer.parseInt(date[2]), Integer.parseInt(endT[0]),
                         Integer.parseInt(endT[1]));
-                CalendarReminderUtils.addCalendarEvent(
-                        getActivity(), temp.getTitle(), temp.getDescription(), startTime, endTime, temp.getLocation(), ampm
-                );
+
+                if (startT[0].equals("12") && endT[0].equals("12")) {
+                    CalendarReminderUtils.addCalendarEvent(
+                            getActivity(), temp.getTitle(), temp.getDescription(), startTime, endTime, temp.getLocation(), "AM", "AM"
+                    );
+                } else if (startT[0].equals("12") && !endT[0].equals("12")) {
+                    CalendarReminderUtils.addCalendarEvent(
+                            getActivity(), temp.getTitle(), temp.getDescription(), startTime, endTime, temp.getLocation(), "AM", ampm2
+                    );
+                } else {
+                    CalendarReminderUtils.addCalendarEvent(
+                            getActivity(), temp.getTitle(), temp.getDescription(), startTime, endTime, temp.getLocation(), ampm1, ampm2
+                    );
+                }
+
 
                 e.onNext(!CalendarReminderUtils.isNoCalendarData(getActivity().getApplicationContext(), temp.getTitle()));
             }

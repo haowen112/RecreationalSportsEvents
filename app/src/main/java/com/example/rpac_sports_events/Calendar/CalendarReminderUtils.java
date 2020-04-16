@@ -110,7 +110,7 @@ public class CalendarReminderUtils {
     /**
      * Add event to calendar
      */
-    public static void addCalendarEvent(Context context, String title, String description, long startTime, long endTime, String location, String ampm) {
+    public static void addCalendarEvent(Context context, String title, String description, long startTime, long endTime, String location, String ampm1, String ampm2) {
         if (context == null) {
             return;
         }
@@ -124,13 +124,13 @@ public class CalendarReminderUtils {
         TimeZone tz = TimeZone.getDefault();
         Calendar mCalendar = Calendar.getInstance();
         mCalendar.setTimeInMillis(startTime);
-        if(ampm.equals("PM")){
+        if (ampm1.equals("PM")) {
             mCalendar.add(Calendar.HOUR_OF_DAY, 12);
         }
         long start = mCalendar.getTime().getTime();
         
         mCalendar.setTimeInMillis(endTime);
-        if(ampm.equals("PM")){
+        if (ampm2.equals("PM")) {
             mCalendar.add(Calendar.HOUR_OF_DAY, 12);
         }
         long end = mCalendar.getTime().getTime();
